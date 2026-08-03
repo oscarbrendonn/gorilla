@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gorilla</title>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+<style>
+  :root { color-scheme: dark; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    background: #111214; color: #f2f2f4;
+    min-height: 100vh; display: flex; flex-direction: column;
+  }
+  header { padding: 22px 28px 8px; }
+  h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  p.sub { color: #9a9aa2; font-size: 13px; margin-top: 4px; }
+  nav {
+    display: flex; gap: 8px; padding: 12px 28px; flex-wrap: wrap;
+  }
+  nav button {
+    appearance: none; border: 1px solid #2c2d31; background: #1a1b1e; color: #d6d6db;
+    padding: 8px 16px; border-radius: 999px; font-size: 13px; cursor: pointer;
+  }
+  nav button.active { background: #f2f2f4; color: #111214; border-color: #f2f2f4; }
+  model-viewer {
+    flex: 1; width: 100%; min-height: 70vh;
+    background: radial-gradient(ellipse at 50% 40%, #232428 0%, #111214 70%);
+  }
+  footer { padding: 10px 28px 18px; color: #6f6f76; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Gorilla</h1>
+  <p class="sub">Mouse ile dondur, tekerlekle yaklas. Alttaki secimlerle surum degistir.</p>
+</header>
+<nav id="nav">
+  <button data-src="viewer/gorilla.glb" class="active">Son surum (rigli)</button>
+  <button data-src="viewer/gorilla_apose.glb">A-poz</button>
+  <button data-src="viewer/gorilla_tpose.glb">T-poz</button>
+  <button data-src="viewer/gorilla_static.glb">Statik</button>
+</nav>
+<model-viewer id="mv"
+  src="viewer/gorilla.glb"
+  camera-controls auto-rotate
+  environment-image="neutral"
+  exposure="1.05"
+  shadow-intensity="0.6"
+  alt="Gorilla 3D model">
+</model-viewer>
+<footer>67 Gorilla - dosyalar ayni reponun icinde, tam cozunurluk icin README'ye bak.</footer>
+<script>
+  const mv = document.getElementById('mv');
+  document.getElementById('nav').addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    document.querySelectorAll('nav button').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    mv.src = b.dataset.src;
+  });
+</script>
+</body>
+</html>
